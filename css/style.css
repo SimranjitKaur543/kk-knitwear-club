@@ -62,112 +62,119 @@ button { background: none; border: 0; }
     /* ---------------------------------------------------------------------
        COLOUR SYSTEM
 
-       Two hues only, and each has one job it never leaves:
+       Roughly 65% light neutrals, 25% soft colour, 10% stronger accent.
+       Ivory is the page; peach, sage and powder blue tint whole sections;
+       cards stay light with small coloured details.
 
-         teal  - anything interactive or identifying. Links, the primary
-                 button, active navigation, the brand mark, focus rings,
-                 filter pills, step numbers, "success".
-         clay  - the quiet counterweight. Alternate section labels, the
-                 Best Suited For pills, the "these differ" highlight in
-                 the comparison table, cautions.
+       Two measured constraints shaped how the palette is applied:
 
-       Everything else is neutral. Feedback colours are folded into those
-       two hues rather than adding a third and fourth, so the whole site
-       runs on teal + clay + greys + one red reserved for form errors.
+       1. All four accent hues fail WCAG AA as text, and also as a fill
+          with white text on them:
 
-       Four background tones give the page its rhythm. They are close
-       enough to read as one family, so the rule is: never place two
-       tinted sections next to each other - always return to white
-       between them, or the step is invisible.
+                          as text   white on it
+            terracotta      2.97       3.55
+            sage            3.11       3.72
+            dusty blue      2.85       3.40
+            ochre           1.83       2.19
 
-       Every text colour here clears WCAG AA (4.5:1) on all four
-       backgrounds. Verified, not estimated.
+          Ochre alone works as a fill with CHARCOAL on it (6.71), which is
+          why it stays a badge colour and never a text colour.
+
+          So the given hues stay as the identity - section backgrounds,
+          fills, borders, rules, tints, decoration - and deepened versions
+          of the SAME hues carry anything that has to be read.
+
+       2. The four tinted backgrounds are only 1.00-1.03 apart from each
+          other, i.e. mutually invisible. Ivory must sit between any two
+          of them.
        --------------------------------------------------------------------- */
 
     /* --- The specified palette, exactly as given ---------------------- */
-    --navy:     #183B56;   /* headings, navigation, important UI */
-    --teal:     #2A7F7F;   /* secondary elements, icons, interactive */
-    --coral:    #D96C5F;   /* CTAs, highlights, small accents */
-    --mustard:  #D9A441;   /* small labels, decorative details */
-    --cream:    #F7F3EA;   /* alternating section backgrounds */
-    --charcoal: #263238;   /* body text */
+    --ivory:      #FAF7F2;   /* main background */
+    --peach:      #F7E8DF;   /* selected sections */
+    --sage-bg:    #E8F0E8;   /* secondary sections */
+    --powder:     #E7EEF5;   /* subtle highlights */
+    --beige:      #F2EDE5;   /* cards / areas */
+    --charcoal:   #292827;   /* text only */
+    --terracotta: #C96F5B;   /* primary buttons, active states, highlights */
+    --sage:       #718B73;   /* secondary accents */
+    --dusty:      #6F8FA8;   /* links, filters, informational */
+    --ochre:      #D6A84F;   /* very small highlights / badges */
 
-    /* --- Darker shades of those same hues, for text and fills --------
-       Three of the four given hues cannot carry text or white-on-colour
-       at AA, measured rather than guessed:
+    /* --- Deepened shades of those same hues, for text and fills ------- */
+    --terracotta-ink: #A6503D;   /* 5.5:1  button fill, white text on it */
+    --terracotta-dk:  #8E4331;   /* 7.0:1  hover */
+    --dusty-ink:      #4A6B85;   /* 5.6:1  links */
+    --dusty-dk:       #3C5A72;   /* 7.3:1  link hover */
+    --sage-ink:       #4F684F;   /* 6.1:1  secondary accent text */
+    --ochre-ink:      #7A5A16;   /* 6.4:1  small label text */
 
-         coral   #D96C5F  3.35:1 as text, 3.35:1 with white on it
-         mustard #D9A441  2.25:1 as text, 2.25:1 with white on it
-         teal    #2A7F7F  4.73:1 on white but only 4.27:1 on cream
+    /* --- Backgrounds --------------------------------------------------
+       Product cards stay WHITE rather than beige: beige on ivory is only
+       1.09, and a fabric photograph reads cleanest against white. Beige
+       does the "areas" job instead - toolbars, table heads, panels.      */
+    --page:          var(--ivory);    /* body */
+    --bg:            #ffffff;         /* product cards, panels */
+    --surface:       var(--beige);    /* toolbars, table heads, areas */
+    --surface-tint:  var(--peach);    /* section rhythm */
+    --surface-warm:  var(--sage-bg);  /* section rhythm */
+    --surface-2:     #EAE3D8;         /* hover / pressed fill */
+    --surface-3:     #DED5C6;
 
-       So the given hues stay as the identity - fills, borders, rules,
-       tints, decoration - and these deepened versions of the SAME hues
-       carry anything that has to be read. The site still looks like the
-       palette; it just stays legible.                                   */
-    --navy-dk:     #0F2A3E;   /* 14.8:1  hover */
-    --teal-ink:    #1F6060;   /*  7.2:1  links, active state */
-    --teal-dk:     #174B4B;
-    --coral-ink:   #B04435;   /*  5.6:1  CTA fill, white text on it */
-    --coral-dk:    #9E3C2E;   /*  6.7:1  CTA hover */
-    --mustard-ink: #7A5813;   /*  6.5:1  small labels */
+    /* Powder blue takes the "subtle highlight" job: panel headers */
+    --navy-lt:       var(--powder);
+    --navy-ln:       #CFDDE9;
+    --navy:          var(--charcoal);  /* alias kept for existing rules */
+    --navy-dk:       #000000;
 
-    /* --- Backgrounds: white and cream alternating, nothing else ------ */
-    --bg:            #ffffff;      /* product cards, content areas */
-    --surface:       var(--cream);
-    --surface-tint:  var(--cream); /* kept as aliases so existing markup */
-    --surface-warm:  var(--cream); /* keeps working - one alternate tone */
-    --surface-2:     #EFEADD;      /* hover / pressed fill */
-    --surface-3:     #E3DCCB;
+    /* --- Hairlines, warmed to sit with the ivory and beige ------------ */
+    --line:       #E7DFD3;
+    --line-2:     #D8CDBC;
+    --line-3:     #C0B3A0;
 
-    /* Panel headers, so navy shows in the UI chrome as well as the type */
-    --navy-lt:       #EAEFF3;
-    --navy-ln:       #D3DDE4;
+    /* --- Text: charcoal only, per the palette -------------------------
+       Every value below clears AA on white, ivory, beige, peach, sage
+       and powder blue.                                                  */
+    --ink:        var(--charcoal);  /* headings, figures   12.3:1 worst */
+    --ink-2:      #3A3734;          /* body                10.4:1 worst */
+    --muted:      #5E5B57;          /* labels               5.7:1 worst */
+    --muted-2:    #6B6862;          /* micro-labels         4.6:1 worst */
 
-    /* --- Hairlines, warmed to sit with the cream ---------------------- */
-    --line:       #E6E1D6;
-    --line-2:     #D5CEBF;
-    --line-3:     #BCB3A2;
-
-    /* --- Text ---------------------------------------------------------
-       Every one of these clears AA on white, cream, the hover fill and
-       all three colour tints.                                           */
-    --ink:        var(--navy);      /* headings, figures       11.7:1 */
-    --ink-2:      var(--charcoal);  /* body                    13.2:1 */
-    --muted:      #4F636E;          /* labels                   6.3:1 */
-    --muted-2:    #576C76;          /* micro-labels             5.5:1 */
-
-    /* --- Interactive: teal ------------------------------------------- */
-    --accent:     var(--teal-ink);
-    --accent-dk:  var(--teal-dk);
-    --accent-lt:  #E8F1F0;
-    --accent-ln:  #CFE2E1;
+    /* --- Interactive: dusty blue (links, filters, informational) ------ */
+    --accent:     var(--dusty-ink);
+    --accent-dk:  var(--dusty-dk);
+    --accent-lt:  var(--powder);
+    --accent-ln:  #CFDDE9;
     --accent-ink: #ffffff;
 
-    /* --- Primary CTA: coral ------------------------------------------ */
-    --cta:        var(--coral-ink);
-    --cta-dk:     var(--coral-dk);
-    --cta-lt:     #FBEDEA;
-    --cta-ln:     #F0D3CD;
+    /* --- Primary CTA and active state: terracotta -------------------- */
+    --cta:        var(--terracotta-ink);
+    --cta-dk:     var(--terracotta-dk);
+    --cta-lt:     #F9E7E1;
+    --cta-ln:     #EFD0C6;
     --cta-ink:    #ffffff;
 
-    /* --- Highlights: coral tints (Best Suited For, table differences) */
-    --clay:       var(--coral);
-    --clay-dk:    var(--coral-dk);
-    --clay-lt:    var(--cta-lt);
-    --clay-ln:    var(--cta-ln);
-    --clay-mid:   #F4E6DB;   /* hover step between tint and coral */
+    /* --- Secondary accent: sage (Best Suited For, "success") --------- */
+    --clay:       var(--sage);
+    --clay-dk:    var(--sage-ink);
+    --clay-lt:    var(--sage-bg);
+    --clay-ln:    #CFDECF;
+    --clay-mid:   #DBE7DB;   /* hover step */
 
-    /* --- Mustard tints ----------------------------------------------- */
-    --mus-lt:     #FBF2DF;
-    --mus-ln:     #EFDFBA;
+    /* --- Ochre tints: badges and the comparison highlight ------------ */
+    --mus-lt:      #FBF3E2;
+    --mus-ln:      #EEDDB4;
+    --mus-mid:     #F6EBD2;   /* hover step */
+    --mustard:     var(--ochre);      /* alias kept for existing rules */
+    --mustard-ink: var(--ochre-ink);
 
     /* --- Feedback, drawn from the palette rather than adding hues ---- */
-    --warn:       var(--mustard-ink);
+    --warn:       var(--ochre-ink);
     --warn-bg:    var(--mus-lt);
     --warn-line:  var(--mus-ln);
-    --ok:         var(--teal-ink);
-    --ok-bg:      var(--accent-lt);
-    --ok-line:    var(--accent-ln);
+    --ok:         var(--sage-ink);
+    --ok-bg:      var(--sage-bg);
+    --ok-line:    #CFDECF;
     --danger:     #A13527;   /* form errors only */
 
     /* Spacing scale */
@@ -211,7 +218,7 @@ body {
     font-size: .9375rem;              /* 15px - a working density for specs */
     line-height: 1.62;
     color: var(--ink-2);
-    background: var(--bg);
+    background: var(--page);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-feature-settings: "kern" 1, "liga" 1;
@@ -283,13 +290,13 @@ em { font-style: italic; }
 .section          { padding: var(--sp-section) 0; }
 .section--tight   { padding: var(--sp-section-tight) 0; }
 
-/* Two background tones only: white and cream, alternating. The three
-   class names are kept so existing markup still works, but they all
-   resolve to cream now - the rhythm is a single clean alternation
-   (1.11 luminance ratio against white, clearly visible). */
-.section--surface { background: var(--surface); }
-.section--tint    { background: var(--surface-tint); }
-.section--warm    { background: var(--surface-warm); }
+/* Section tones: peach and sage tint whole sections, beige is the quieter
+   neutral. The page itself is ivory, and ivory must sit between any two
+   tinted sections - peach against sage is only 1.028, invisible. */
+.section--surface { background: var(--surface); }       /* beige  */
+.section--tint    { background: var(--surface-tint); }  /* peach  */
+.section--warm    { background: var(--surface-warm); }  /* sage   */
+.section--cool    { background: var(--powder); }        /* powder blue */
 
 /* A hairline instead of a heavy tinted band, where separation is enough */
 .section--divided { border-top: 1px solid var(--line); }
@@ -333,7 +340,9 @@ em { font-style: italic; }
     position: sticky;
     top: 0;
     z-index: 60;
-    background: rgba(255, 255, 255, .88);
+    /* Light header, tinted to the ivory page rather than pure white so it
+       does not read as a separate white band sitting on the background. */
+    background: rgba(250, 247, 242, .9);
     backdrop-filter: saturate(180%) blur(14px);
     -webkit-backdrop-filter: saturate(180%) blur(14px);
     border-bottom: 1px solid transparent;
@@ -366,7 +375,7 @@ em { font-style: italic; }
 .brand-mark {
     width: 38px; height: 38px;
     border-radius: var(--r-sm);
-    background: var(--navy);
+    background: var(--cta);
     color: #ffffff;
     display: grid;
     place-items: center;
@@ -376,7 +385,7 @@ em { font-style: italic; }
     flex-shrink: 0;
     transition: background var(--t);
 }
-.brand:hover .brand-mark { background: var(--navy-dk); }
+.brand:hover .brand-mark { background: var(--cta-dk); }
 
 .brand-text { line-height: 1.15; }
 .brand-name {
@@ -399,13 +408,14 @@ em { font-style: italic; }
 .nav { margin-left: auto; }
 .nav ul { display: flex; align-items: center; gap: var(--s1); }
 
-/* Navigation is navy, per the palette. The active item switches to teal
-   so state reads as a change of hue, not just of weight. */
+/* Navigation is charcoal. The active item switches to terracotta, which
+   the palette assigns to active states, so state reads as a change of hue
+   and not just of weight. */
 .nav a {
     position: relative;
     display: block;
     padding: var(--s2) var(--s3);
-    color: var(--navy);
+    color: var(--charcoal);
     font-size: .875rem;
     font-weight: 500;
     letter-spacing: -.006em;
@@ -422,12 +432,12 @@ em { font-style: italic; }
     bottom: 2px;
     height: 1.5px;
     border-radius: 2px;
-    background: var(--accent);
+    background: var(--cta);
     transform: scaleX(0);
     transition: transform var(--t);
 }
 .nav a:hover::after { transform: scaleX(.4); }
-.nav a[aria-current="page"] { color: var(--accent); font-weight: 600; }
+.nav a[aria-current="page"] { color: var(--cta); font-weight: 600; }
 .nav a[aria-current="page"]::after { transform: scaleX(1); }
 
 .header-tools {
@@ -975,9 +985,10 @@ a.chip:hover { background: var(--accent); color: var(--accent-ink); }
     cursor: pointer;
     transition: color var(--t-fast);
 }
+/* Dusty blue, which the palette assigns to filters */
 .fopt input {
     width: 15px; height: 15px;
-    accent-color: var(--teal);
+    accent-color: var(--dusty);
     cursor: pointer;
     flex-shrink: 0;
     margin: 0;
@@ -1369,10 +1380,11 @@ a.chip:hover { background: var(--accent); color: var(--accent-ink); }
 .cmp td { color: var(--ink); font-weight: 500; }
 .cmp .dash { color: var(--muted-2); font-weight: 400; }
 
-/* Rows where the fabrics differ - the reason this page exists. Clay,
-   matching Best Suited For: both are "look at this product fact". */
-.cmp td.differs { background: var(--clay-lt); }
-.cmp tbody tr:hover td.differs { background: var(--clay-mid); }
+/* Rows where the fabrics differ - the reason this page exists. Ochre, the
+   palette's highlight colour, so it stays distinct from the sage used on
+   the Best Suited For pills. */
+.cmp td.differs { background: var(--mus-lt); }
+.cmp tbody tr:hover td.differs { background: var(--mus-mid); }
 
 .cmp-col { min-width: 208px; }
 .cmp-prod { display: flex; flex-direction: column; gap: var(--s2); }
@@ -1409,7 +1421,7 @@ a.chip:hover { background: var(--accent); color: var(--accent-ink); }
 }
 .cmp-legend i {
     width: 12px; height: 12px; border-radius: 3px;
-    background: var(--clay-lt); border: 1px solid var(--clay-ln);
+    background: var(--mus-lt); border: 1px solid var(--mus-ln);
     display: inline-block; flex-shrink: 0;
 }
 
@@ -1650,9 +1662,9 @@ a.chip:hover { background: var(--accent); color: var(--accent-ink); }
     grid-template-columns: repeat(auto-fit, minmax(158px, 1fr));
     gap: var(--s5);
 }
-/* Mustard as a decorative rule - a fill, never text, which is the one
-   place the given #D9A441 is safe to use at full strength. */
-.stat { padding-left: var(--s4); border-left: 2px solid var(--mustard); }
+/* Ochre as a decorative rule - a fill, never text, which is the one place
+   the given hue is safe to use at full strength. */
+.stat { padding-left: var(--s4); border-left: 2px solid var(--ochre); }
 .stat .v {
     font-size: 1.625rem;
     font-weight: 650;

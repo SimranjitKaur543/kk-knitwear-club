@@ -245,58 +245,73 @@ home page, in the filters and in the footer automatically.
 
 ## Colour
 
-The palette, and the one job each colour holds. Navy and the neutrals
-dominate; teal, coral and mustard are used sparingly, in that order of
-frequency.
+Roughly 65% light neutrals, 25% soft colour, 10% stronger accent. Ivory is
+the page, cards stay white, and each accent holds one job.
 
 | Colour | Job | Where it appears |
 |---|---|---|
-| **Navy** `#183B56` | Headings, navigation, important UI | All headings, nav links, brand mark, price figures, compare tray, panel headers |
-| **Charcoal** `#263238` | Body text | Paragraphs, spec values |
-| **Teal** `#2A7F7F` | Secondary and interactive | Links, active nav + its underline, filter checkboxes, focus rings, section labels, step numbers, "success" |
-| **Coral** `#D96C5F` | Primary CTAs and highlights | Primary buttons, Best Suited For pills, the "these differ" highlight in Compare |
-| **Mustard** `#D9A441` | Small labels, decoration | Cream-section labels, the stat strip rules, cautions |
-| **Cream** `#F7F3EA` | Alternating section backgrounds | Every other section, footer, table heads |
-| **White** `#FFFFFF` | Product cards, content areas | All cards, all panels |
+| **Ivory** `#FAF7F2` | Main background | The page itself, and the separator between tinted sections |
+| **White** `#FFFFFF` | Cards and content areas | All 50 product cards, all panels, quick specs |
+| **Warm beige** `#F2EDE5` | Areas | Toolbars, table heads, footer, saved-item bars |
+| **Soft peach** `#F7E8DF` | Selected sections | The stat strip |
+| **Light sage** `#E8F0E8` | Secondary sections | The featured-fabrics section; Best Suited For pills |
+| **Powder blue** `#E7EEF5` | Subtle highlights | Filter-panel and info-card headers, informational notes |
+| **Charcoal** `#292827` | Text only | Headings, figures, nav, the compare tray |
+| **Terracotta** `#C96F5B` | Primary buttons, active states | Primary CTAs, active nav + underline, brand mark |
+| **Sage green** `#718B73` | Secondary accents | Best Suited For, "success" |
+| **Dusty blue** `#6F8FA8` | Links, filters, informational | Links, section labels, filter checkboxes, focus rings |
+| **Soft ochre** `#D6A84F` | Very small highlights, badges | Review stars, stat-strip rules, the "these differ" highlight, cautions |
 
 Feedback colours are drawn from the palette rather than adding new hues:
-success is teal, caution is mustard. Only one colour sits outside the
-palette — `#A13527`, reserved for form errors.
+success is sage, caution is ochre, informational is powder blue. One colour
+sits outside it — `#A13527`, reserved for form errors.
 
 ### Why some tokens are darker than the given hex
 
-Three of the four accent hues cannot legally carry text. Measured, not
-guessed:
+**All four accent hues fail WCAG AA as text, and as a fill with white text
+on them.** Measured, not guessed:
 
-| As given | As text on white | With white text on it |
+| | as text | white text on it |
 |---|---|---|
-| Coral `#D96C5F` | 3.35 — fails | 3.35 — fails |
-| Mustard `#D9A441` | 2.25 — fails | 2.25 — fails |
-| Teal `#2A7F7F` | 4.73 — passes | 4.73 — passes, but only 4.27 on cream |
+| Terracotta `#C96F5B` | 2.97 — fails | 3.55 — fails |
+| Sage `#718B73` | 3.11 — fails | 3.72 — fails |
+| Dusty blue `#6F8FA8` | 2.85 — fails | 3.40 — fails |
+| Ochre `#D6A84F` | 1.83 — fails | 2.19 — fails |
 
-So the given hues stay as the **identity** — fills, borders, rules, tints,
-decoration — and deepened versions of the *same* hues carry anything that
-has to be read:
+Ochre alone works as a fill with **charcoal** on it (6.71), which is why it
+stays a badge colour and never a text colour.
+
+So the given hues stay as the **identity** — section backgrounds, fills,
+borders, rules, tints, decoration — and deepened versions of the *same* hues
+carry anything that has to be read:
 
 ```
---teal-ink     #1F6060   7.2:1   links, active state
---coral-ink    #B04435   5.6:1   CTA fill, white text on it
---coral-dk     #9E3C2E   6.7:1   CTA hover
---mustard-ink  #7A5813   6.5:1   small labels
---navy-dk      #0F2A3E  14.8:1   hover
+--terracotta-ink  #A6503D   5.5:1   button fill, white text on it
+--terracotta-dk   #8E4331   7.0:1   hover
+--dusty-ink       #4A6B85   5.6:1   links
+--dusty-dk        #3C5A72   7.3:1   link hover
+--sage-ink        #4F684F   6.1:1   secondary accent text
+--ochre-ink       #7A5A16   6.4:1   small label text
 ```
 
-The site still reads as the palette; it just stays legible. `#D9A441` does
-appear at full strength where it is safe — as a decorative rule, never as
-text.
+The site reads as the palette; it just stays legible. Each given hue still
+appears at full strength where it is safe — ochre as the review stars and
+the stat rules, dusty blue as the filter checkbox accent, sage and peach as
+whole section backgrounds.
 
 ### Section rhythm
 
-Two tones, alternating: **white and cream** (1.11 luminance ratio — clearly
-visible). The home page runs white → cream → white → cream → white.
+**Ivory must sit between any two tinted sections.** The four tinted tones
+are only 1.00–1.03 apart from each other — mutually invisible — while each
+is a clear 1.09–1.12 against ivory. The home page runs
+ivory → peach → ivory → sage → ivory, with a beige footer.
 
-Section labels follow the background: teal on white, mustard
-(`.eyebrow--alt`) on cream.
+Product cards are **white, not beige**: beige on ivory is only 1.09, and a
+fabric photograph reads cleanest against white. Beige does the "areas" job
+instead.
+
+Section labels alternate: dusty blue on ivory, ochre (`.eyebrow--alt`) on
+tinted sections.
 
 ### Contrast
 
@@ -304,15 +319,19 @@ Section labels follow the background: teal on white, mustard
 walking every text element, resolving its true background through
 ancestors, and applying the correct AA threshold for its size and weight.
 
-| | on white | on cream | on hover fill |
-|---|---|---|---|
-| Navy | 11.7 | 10.5 | 9.7 |
-| Charcoal | 13.2 | 11.9 | 11.0 |
-| `--muted` | 6.3 | 5.7 | 5.2 |
-| `--muted-2` | 5.5 | 5.0 | 4.6 |
-| Teal ink | 7.2 | 6.5 | 6.0 |
-| Coral ink | 5.6 | 5.1 | 4.7 |
-| Mustard ink | 6.5 | 5.9 | 5.4 |
+Worst case for each text colour, across white, ivory, beige, peach, sage
+and powder blue:
+
+| | worst ratio |
+|---|---|
+| Charcoal `--ink` | 12.3 |
+| Body `--ink-2` | 10.4 |
+| `--muted` | 5.7 |
+| `--muted-2` | 4.6 |
+| Dusty ink | 4.7 |
+| Terracotta ink | 4.6 |
+| Sage ink | 5.1 |
+| Ochre ink | 5.3 |
 
 The whole palette lives in the `:root` block at the top of `style.css`, so a
 change is a handful of token values, never a rewrite.
