@@ -212,6 +212,80 @@ home page, in the filters and in the footer automatically.
   block.
 - **No horizontal scrolling** at 360 px.
 
+## Colour
+
+The palette, and the one job each colour holds. Navy and the neutrals
+dominate; teal, coral and mustard are used sparingly, in that order of
+frequency.
+
+| Colour | Job | Where it appears |
+|---|---|---|
+| **Navy** `#183B56` | Headings, navigation, important UI | All headings, nav links, brand mark, price figures, compare tray, panel headers |
+| **Charcoal** `#263238` | Body text | Paragraphs, spec values |
+| **Teal** `#2A7F7F` | Secondary and interactive | Links, active nav + its underline, filter checkboxes, focus rings, section labels, step numbers, "success" |
+| **Coral** `#D96C5F` | Primary CTAs and highlights | Primary buttons, Best Suited For pills, the "these differ" highlight in Compare |
+| **Mustard** `#D9A441` | Small labels, decoration | Cream-section labels, the stat strip rules, cautions |
+| **Cream** `#F7F3EA` | Alternating section backgrounds | Every other section, footer, table heads |
+| **White** `#FFFFFF` | Product cards, content areas | All cards, all panels |
+
+Feedback colours are drawn from the palette rather than adding new hues:
+success is teal, caution is mustard. Only one colour sits outside the
+palette — `#A13527`, reserved for form errors.
+
+### Why some tokens are darker than the given hex
+
+Three of the four accent hues cannot legally carry text. Measured, not
+guessed:
+
+| As given | As text on white | With white text on it |
+|---|---|---|
+| Coral `#D96C5F` | 3.35 — fails | 3.35 — fails |
+| Mustard `#D9A441` | 2.25 — fails | 2.25 — fails |
+| Teal `#2A7F7F` | 4.73 — passes | 4.73 — passes, but only 4.27 on cream |
+
+So the given hues stay as the **identity** — fills, borders, rules, tints,
+decoration — and deepened versions of the *same* hues carry anything that
+has to be read:
+
+```
+--teal-ink     #1F6060   7.2:1   links, active state
+--coral-ink    #B04435   5.6:1   CTA fill, white text on it
+--coral-dk     #9E3C2E   6.7:1   CTA hover
+--mustard-ink  #7A5813   6.5:1   small labels
+--navy-dk      #0F2A3E  14.8:1   hover
+```
+
+The site still reads as the palette; it just stays legible. `#D9A441` does
+appear at full strength where it is safe — as a decorative rule, never as
+text.
+
+### Section rhythm
+
+Two tones, alternating: **white and cream** (1.11 luminance ratio — clearly
+visible). The home page runs white → cream → white → cream → white.
+
+Section labels follow the background: teal on white, mustard
+(`.eyebrow--alt`) on cream.
+
+### Contrast
+
+**Zero failures across all seven pages** — audited on the rendered DOM,
+walking every text element, resolving its true background through
+ancestors, and applying the correct AA threshold for its size and weight.
+
+| | on white | on cream | on hover fill |
+|---|---|---|---|
+| Navy | 11.7 | 10.5 | 9.7 |
+| Charcoal | 13.2 | 11.9 | 11.0 |
+| `--muted` | 6.3 | 5.7 | 5.2 |
+| `--muted-2` | 5.5 | 5.0 | 4.6 |
+| Teal ink | 7.2 | 6.5 | 6.0 |
+| Coral ink | 5.6 | 5.1 | 4.7 |
+| Mustard ink | 6.5 | 5.9 | 5.4 |
+
+The whole palette lives in the `:root` block at the top of `style.css`, so a
+change is a handful of token values, never a rewrite.
+
 ## Motion
 
 Content blocks fade and rise 12px as they come into view, product photos fade

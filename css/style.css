@@ -59,36 +59,116 @@ button { background: none; border: 0; }
 /* ---------- 2. Design tokens -------------------------------------------- */
 
 :root {
-    /* Warm neutrals. Warm greys sit better against textile photography
-       than blue-greys, which make fabric look cold. */
-    --bg:         #ffffff;
-    --surface:    #faf9f7;
-    --surface-2:  #f3f2ef;
-    --surface-3:  #eae8e3;
+    /* ---------------------------------------------------------------------
+       COLOUR SYSTEM
 
-    --line:       #e8e6e1;
-    --line-2:     #d9d6cf;
-    --line-3:     #c4c0b7;
+       Two hues only, and each has one job it never leaves:
 
-    --ink:        #1a1a18;
-    --ink-2:      #3c3c37;
-    --muted:      #6d6c64;
-    --muted-2:    #9a988f;
+         teal  - anything interactive or identifying. Links, the primary
+                 button, active navigation, the brand mark, focus rings,
+                 filter pills, step numbers, "success".
+         clay  - the quiet counterweight. Alternate section labels, the
+                 Best Suited For pills, the "these differ" highlight in
+                 the comparison table, cautions.
 
-    /* A single accent: deep teal-green. Used for links, active state and
-       the primary CTA. Nowhere else. */
-    --accent:     #12564a;
-    --accent-dk:  #0d3f36;
-    --accent-lt:  #edf3f1;
+       Everything else is neutral. Feedback colours are folded into those
+       two hues rather than adding a third and fourth, so the whole site
+       runs on teal + clay + greys + one red reserved for form errors.
+
+       Four background tones give the page its rhythm. They are close
+       enough to read as one family, so the rule is: never place two
+       tinted sections next to each other - always return to white
+       between them, or the step is invisible.
+
+       Every text colour here clears WCAG AA (4.5:1) on all four
+       backgrounds. Verified, not estimated.
+       --------------------------------------------------------------------- */
+
+    /* --- The specified palette, exactly as given ---------------------- */
+    --navy:     #183B56;   /* headings, navigation, important UI */
+    --teal:     #2A7F7F;   /* secondary elements, icons, interactive */
+    --coral:    #D96C5F;   /* CTAs, highlights, small accents */
+    --mustard:  #D9A441;   /* small labels, decorative details */
+    --cream:    #F7F3EA;   /* alternating section backgrounds */
+    --charcoal: #263238;   /* body text */
+
+    /* --- Darker shades of those same hues, for text and fills --------
+       Three of the four given hues cannot carry text or white-on-colour
+       at AA, measured rather than guessed:
+
+         coral   #D96C5F  3.35:1 as text, 3.35:1 with white on it
+         mustard #D9A441  2.25:1 as text, 2.25:1 with white on it
+         teal    #2A7F7F  4.73:1 on white but only 4.27:1 on cream
+
+       So the given hues stay as the identity - fills, borders, rules,
+       tints, decoration - and these deepened versions of the SAME hues
+       carry anything that has to be read. The site still looks like the
+       palette; it just stays legible.                                   */
+    --navy-dk:     #0F2A3E;   /* 14.8:1  hover */
+    --teal-ink:    #1F6060;   /*  7.2:1  links, active state */
+    --teal-dk:     #174B4B;
+    --coral-ink:   #B04435;   /*  5.6:1  CTA fill, white text on it */
+    --coral-dk:    #9E3C2E;   /*  6.7:1  CTA hover */
+    --mustard-ink: #7A5813;   /*  6.5:1  small labels */
+
+    /* --- Backgrounds: white and cream alternating, nothing else ------ */
+    --bg:            #ffffff;      /* product cards, content areas */
+    --surface:       var(--cream);
+    --surface-tint:  var(--cream); /* kept as aliases so existing markup */
+    --surface-warm:  var(--cream); /* keeps working - one alternate tone */
+    --surface-2:     #EFEADD;      /* hover / pressed fill */
+    --surface-3:     #E3DCCB;
+
+    /* Panel headers, so navy shows in the UI chrome as well as the type */
+    --navy-lt:       #EAEFF3;
+    --navy-ln:       #D3DDE4;
+
+    /* --- Hairlines, warmed to sit with the cream ---------------------- */
+    --line:       #E6E1D6;
+    --line-2:     #D5CEBF;
+    --line-3:     #BCB3A2;
+
+    /* --- Text ---------------------------------------------------------
+       Every one of these clears AA on white, cream, the hover fill and
+       all three colour tints.                                           */
+    --ink:        var(--navy);      /* headings, figures       11.7:1 */
+    --ink-2:      var(--charcoal);  /* body                    13.2:1 */
+    --muted:      #4F636E;          /* labels                   6.3:1 */
+    --muted-2:    #576C76;          /* micro-labels             5.5:1 */
+
+    /* --- Interactive: teal ------------------------------------------- */
+    --accent:     var(--teal-ink);
+    --accent-dk:  var(--teal-dk);
+    --accent-lt:  #E8F1F0;
+    --accent-ln:  #CFE2E1;
     --accent-ink: #ffffff;
 
-    /* Feedback tones, deliberately desaturated */
-    --warn:       #7d5314;
-    --warn-bg:    #fdf8ee;
-    --warn-line:  #ecdfc4;
-    --ok:         #1c5d3c;
-    --ok-bg:      #eef5f0;
-    --danger:     #a13527;
+    /* --- Primary CTA: coral ------------------------------------------ */
+    --cta:        var(--coral-ink);
+    --cta-dk:     var(--coral-dk);
+    --cta-lt:     #FBEDEA;
+    --cta-ln:     #F0D3CD;
+    --cta-ink:    #ffffff;
+
+    /* --- Highlights: coral tints (Best Suited For, table differences) */
+    --clay:       var(--coral);
+    --clay-dk:    var(--coral-dk);
+    --clay-lt:    var(--cta-lt);
+    --clay-ln:    var(--cta-ln);
+    --clay-mid:   #F4E6DB;   /* hover step between tint and coral */
+
+    /* --- Mustard tints ----------------------------------------------- */
+    --mus-lt:     #FBF2DF;
+    --mus-ln:     #EFDFBA;
+
+    /* --- Feedback, drawn from the palette rather than adding hues ---- */
+    --warn:       var(--mustard-ink);
+    --warn-bg:    var(--mus-lt);
+    --warn-line:  var(--mus-ln);
+    --ok:         var(--teal-ink);
+    --ok-bg:      var(--accent-lt);
+    --ok-line:    var(--accent-ln);
+    --danger:     #A13527;   /* form errors only */
 
     /* Spacing scale */
     --s1: 4px;  --s2: 8px;  --s3: 12px; --s4: 16px; --s5: 24px;
@@ -162,7 +242,9 @@ a:hover { color: var(--accent-dk); }
 strong, b { color: var(--ink); font-weight: 600; }
 em { font-style: italic; }
 
-/* Small uppercase label above a heading */
+/* Small uppercase label above a heading. Alternating teal and clay down
+   the page is what stops a long column of sections reading as one block -
+   two hues doing the work that a dozen would do badly. */
 .eyebrow {
     font-size: .6875rem;
     font-weight: 600;
@@ -171,6 +253,8 @@ em { font-style: italic; }
     color: var(--accent);
     margin-bottom: var(--s3);
 }
+/* Mustard, the smallest of the four hues, appears on cream sections only */
+.eyebrow--alt { color: var(--mustard-ink); }
 
 .lede {
     font-size: 1.0625rem;
@@ -198,7 +282,14 @@ em { font-style: italic; }
 
 .section          { padding: var(--sp-section) 0; }
 .section--tight   { padding: var(--sp-section-tight) 0; }
+
+/* Two background tones only: white and cream, alternating. The three
+   class names are kept so existing markup still works, but they all
+   resolve to cream now - the rhythm is a single clean alternation
+   (1.11 luminance ratio against white, clearly visible). */
 .section--surface { background: var(--surface); }
+.section--tint    { background: var(--surface-tint); }
+.section--warm    { background: var(--surface-warm); }
 
 /* A hairline instead of a heavy tinted band, where separation is enough */
 .section--divided { border-top: 1px solid var(--line); }
@@ -212,7 +303,11 @@ em { font-style: italic; }
     flex-wrap: wrap;
 }
 .section-head > div { max-width: 62ch; }
-.section-head p { margin-top: var(--s3); color: var(--muted); }
+
+/* :not(.eyebrow) matters. A bare `.section-head p` selector is (0,1,1) and
+   silently beat `.eyebrow` at (0,1,0), which turned every section label
+   grey and swallowed the accent colour entirely. */
+.section-head p:not(.eyebrow) { margin-top: var(--s3); color: var(--muted); }
 .section-head h1 + p, .section-head h2 + p { margin-top: var(--s3); }
 
 .rule { height: 1px; background: var(--line); border: 0; }
@@ -271,8 +366,8 @@ em { font-style: italic; }
 .brand-mark {
     width: 38px; height: 38px;
     border-radius: var(--r-sm);
-    background: var(--accent);
-    color: var(--accent-ink);
+    background: var(--navy);
+    color: #ffffff;
     display: grid;
     place-items: center;
     font-weight: 700;
@@ -281,7 +376,7 @@ em { font-style: italic; }
     flex-shrink: 0;
     transition: background var(--t);
 }
-.brand:hover .brand-mark { background: var(--accent-dk); }
+.brand:hover .brand-mark { background: var(--navy-dk); }
 
 .brand-text { line-height: 1.15; }
 .brand-name {
@@ -304,18 +399,20 @@ em { font-style: italic; }
 .nav { margin-left: auto; }
 .nav ul { display: flex; align-items: center; gap: var(--s1); }
 
+/* Navigation is navy, per the palette. The active item switches to teal
+   so state reads as a change of hue, not just of weight. */
 .nav a {
     position: relative;
     display: block;
     padding: var(--s2) var(--s3);
-    color: var(--muted);
+    color: var(--navy);
     font-size: .875rem;
     font-weight: 500;
     letter-spacing: -.006em;
     border-radius: var(--r-xs);
     transition: color var(--t-fast);
 }
-.nav a:hover { color: var(--ink); }
+.nav a:hover { color: var(--navy-dk); }
 
 /* A 2px rule that grows from the centre, rather than a colour change alone */
 .nav a::after {
@@ -439,15 +536,18 @@ em { font-style: italic; }
 .btn:hover { color: inherit; }
 .btn:active { transform: translateY(.5px); }
 
+/* Coral is reserved for this and nothing else: the primary call to action.
+   Links and active states are teal, so a button never reads as just
+   another link. */
 .btn--primary {
-    background: var(--accent);
-    color: var(--accent-ink);
+    background: var(--cta);
+    color: var(--cta-ink);
     box-shadow: var(--sh-xs);
 }
 /* A single pixel of lift is enough to feel responsive without bouncing */
 .btn--primary:hover {
-    background: var(--accent-dk);
-    color: var(--accent-ink);
+    background: var(--cta-dk);
+    color: var(--cta-ink);
     box-shadow: var(--sh-sm);
     transform: translateY(-1px);
 }
@@ -575,8 +675,8 @@ a.chip:hover { background: var(--accent); color: var(--accent-ink); }
     line-height: 1.55;
     border: 1px solid var(--warn-line);
 }
-.note--info { background: var(--accent-lt); color: var(--accent-dk); border-color: #d6e4e0; }
-.note--ok   { background: var(--ok-bg); color: var(--ok); border-color: #d3e4d9; }
+.note--info { background: var(--accent-lt); color: var(--accent-dk); border-color: var(--accent-ln); }
+.note--ok   { background: var(--ok-bg); color: var(--ok); border-color: var(--ok-line); }
 .note strong { color: inherit; }
 
 /* ---------- 7. Product cards & grids ------------------------------------ */
@@ -740,10 +840,10 @@ a.chip:hover { background: var(--accent); color: var(--accent-ink); }
 .icon-btn:active { transform: scale(.94); }
 .icon-btn.is-on {
     background: var(--accent-lt);
-    border-color: #cadedb;
+    border-color: var(--accent-ln);
     color: var(--accent);
 }
-.icon-btn.is-on:hover { background: #e2eeeb; border-color: var(--accent); }
+.icon-btn.is-on:hover { background: var(--accent-ln); border-color: var(--accent); }
 
 /* ---------- 8. Catalogue: search, filters, toolbar ---------------------- */
 
@@ -817,8 +917,8 @@ a.chip:hover { background: var(--accent); color: var(--accent-ink); }
     justify-content: space-between;
     gap: var(--s2);
     padding: var(--s3) var(--s3) var(--s3) var(--s4);
-    border-bottom: 1px solid var(--line);
-    background: var(--surface);
+    border-bottom: 1px solid var(--navy-ln);
+    background: var(--navy-lt);
 }
 .filters-head h2 {
     font-size: .8125rem;
@@ -877,7 +977,7 @@ a.chip:hover { background: var(--accent); color: var(--accent-ink); }
 }
 .fopt input {
     width: 15px; height: 15px;
-    accent-color: var(--accent);
+    accent-color: var(--teal);
     cursor: pointer;
     flex-shrink: 0;
     margin: 0;
@@ -1013,7 +1113,7 @@ a.chip:hover { background: var(--accent); color: var(--accent-ink); }
 }
 .tray-item button:hover { color: #fff; }
 .compare-tray .btn--primary { background: #fff; color: var(--ink); box-shadow: none; }
-.compare-tray .btn--primary:hover { background: #eceae5; color: var(--ink); }
+.compare-tray .btn--primary:hover { background: var(--surface-3); color: var(--ink); }
 .compare-tray .btn--quiet { color: rgba(255, 255, 255, .62); }
 .compare-tray .btn--quiet:hover { color: #fff; background: rgba(255, 255, 255, .1); }
 
@@ -1140,17 +1240,21 @@ a.chip:hover { background: var(--accent); color: var(--accent-ink); }
     margin-bottom: var(--s3);
 }
 .suited ul { display: flex; flex-wrap: wrap; gap: var(--s2); }
+
+/* Clay, not teal: these are product facts, not things you can click.
+   Keeping the two hues apart by role is what makes the colour feel
+   deliberate rather than decorative. */
 .suited li {
     padding: 6px 13px;
-    border: 1px solid var(--line);
+    border: 1px solid var(--clay-ln);
     border-radius: var(--r-full);
     font-size: .8125rem;
     font-weight: 500;
-    color: var(--ink-2);
-    background: var(--surface);
+    color: var(--clay-dk);
+    background: var(--clay-lt);
     transition: border-color var(--t-fast), background var(--t-fast);
 }
-.suited li:hover { border-color: var(--line-3); background: var(--bg); }
+.suited li:hover { border-color: var(--clay); }
 
 /* Accordions */
 .acc { border-top: 1px solid var(--line); }
@@ -1265,9 +1369,10 @@ a.chip:hover { background: var(--accent); color: var(--accent-ink); }
 .cmp td { color: var(--ink); font-weight: 500; }
 .cmp .dash { color: var(--muted-2); font-weight: 400; }
 
-/* Rows where the fabrics differ - the reason this page exists */
-.cmp td.differs { background: var(--warn-bg); }
-.cmp tbody tr:hover td.differs { background: #fbf3e4; }
+/* Rows where the fabrics differ - the reason this page exists. Clay,
+   matching Best Suited For: both are "look at this product fact". */
+.cmp td.differs { background: var(--clay-lt); }
+.cmp tbody tr:hover td.differs { background: var(--clay-mid); }
 
 .cmp-col { min-width: 208px; }
 .cmp-prod { display: flex; flex-direction: column; gap: var(--s2); }
@@ -1304,7 +1409,7 @@ a.chip:hover { background: var(--accent); color: var(--accent-ink); }
 }
 .cmp-legend i {
     width: 12px; height: 12px; border-radius: 3px;
-    background: var(--warn-bg); border: 1px solid var(--warn-line);
+    background: var(--clay-lt); border: 1px solid var(--clay-ln);
     display: inline-block; flex-shrink: 0;
 }
 
@@ -1545,7 +1650,9 @@ a.chip:hover { background: var(--accent); color: var(--accent-ink); }
     grid-template-columns: repeat(auto-fit, minmax(158px, 1fr));
     gap: var(--s5);
 }
-.stat { padding-left: var(--s4); border-left: 2px solid var(--accent-lt); }
+/* Mustard as a decorative rule - a fill, never text, which is the one
+   place the given #D9A441 is safe to use at full strength. */
+.stat { padding-left: var(--s4); border-left: 2px solid var(--mustard); }
 .stat .v {
     font-size: 1.625rem;
     font-weight: 650;
@@ -1662,9 +1769,9 @@ a.chip:hover { background: var(--accent); color: var(--accent-ink); }
     font-weight: 600;
     letter-spacing: .06em;
     text-transform: uppercase;
-    color: var(--muted);
-    border-bottom: 1px solid var(--line);
-    background: var(--surface);
+    color: var(--navy);
+    border-bottom: 1px solid var(--navy-ln);
+    background: var(--navy-lt);
 }
 .info-card .info-body { padding: var(--s5) var(--s4); }
 
