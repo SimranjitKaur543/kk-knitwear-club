@@ -61,6 +61,43 @@
         }).join("");
 
         qs("#about-contact").innerHTML = contactBlock();
+        renderReviews();
+    }
+
+    /* Buyer reviews, verbatim from the manufacturer's testimonial page.
+       The overall figure is quoted from that page rather than averaged
+       from the eight entries - see the note in products.js. */
+    function renderReviews() {
+        var T = window.TESTIMONIALS;
+        if (!T || !T.reviews.length) { return; }
+
+        qs("#reviews-intro").innerHTML =
+            "Rated <strong>" + esc(T.overall) + " out of " + esc(T.outOf) +
+            "</strong> from " + T.count + " buyer reviews, as published on our " +
+            "listing. The most recent are shown below.";
+
+        qs("#reviews-list").className = "reviews-grid mt5";
+        qs("#reviews-list").innerHTML = T.reviews.map(function (r) {
+            var stars = "";
+            for (var i = 1; i <= 5; i++) {
+                stars += '<span class="' + (i <= r.stars ? "on" : "off") +
+                         '" aria-hidden="true">&#9733;</span>';
+            }
+            return '' +
+            '<article class="review">' +
+                '<div class="review-top">' +
+                    '<span class="stars" role="img" aria-label="' + r.stars +
+                        ' out of 5 stars">' + stars + "</span>" +
+                    '<span class="review-date">' + esc(r.date) + "</span>" +
+                "</div>" +
+                (r.text ? '<p class="review-text">&ldquo;' + esc(r.text) + "&rdquo;</p>" : "") +
+                '<p class="review-who">' +
+                    "<strong>" + esc(r.name) + "</strong>" +
+                    '<span class="review-meta">' + esc(r.place) +
+                        " &middot; " + esc(r.product) + "</span>" +
+                "</p>" +
+            "</article>";
+        }).join("");
     }
 
     function initContact() {

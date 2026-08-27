@@ -187,11 +187,11 @@
               esc(p.moq) + "</span></div>"
             : "";
 
-        var descAcc = p.description ? '' +
-            '<details class="acc" open>' +
-                "<summary>About This Fabric</summary>" +
-                '<div class="acc-body"><p>' + esc(p.description) + "</p></div>" +
-            "</details>" : "";
+        /* The summary now sits under the product name instead of in an
+           accordion, so there is no separate "About This Fabric" block. */
+        var summary = p.d.summary
+            ? '<p class="pd-summary">' + esc(p.d.summary) + "</p>"
+            : "";
 
         qs("#pd-root").innerHTML = '' +
         '<div class="pd">' +
@@ -201,6 +201,7 @@
                     '<p class="eyebrow">' + esc(p.source) + "</p>" +
                     "<h1>" + esc(p.name) + "</h1>" +
                     '<div class="pd-cats">' + catChips + "</div>" +
+                    summary +
                 "</div>" +
 
                 '<div class="pd-price">' + priceBlock + moqBlock + "</div>" +
@@ -217,7 +218,6 @@
                 quickSpecs(p) +
                 suitedFor(p) +
 
-                descAcc +
                 '<details class="acc" open>' +
                     "<summary>Full Specifications</summary>" +
                     '<div class="acc-body">' + fullSpecs(p) + "</div>" +

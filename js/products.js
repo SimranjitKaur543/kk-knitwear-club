@@ -1187,3 +1187,66 @@ var COMPANY = {
     ],
     enquiryHint: "To get the best quote, describe your requirement in detail: what you are looking for, features and specifications, application or usage, and the quantity you need."
 };
+
+/* ==========================================================================
+   Buyer reviews - copied verbatim from the manufacturer's own testimonial
+   page. Names, cities, ratings, dates and comment text are all as
+   published; only the two-digit years were written out in full.
+
+   NOTE ON THE OVERALL FIGURE
+   `overall` is quoted from the source page, not averaged from the eight
+   reviews below. The source's own star breakdown counts a one-star review
+   that it never displays, so the eight visible entries are all 5/5 while
+   the published average is 4.5. Recomputing from the visible eight would
+   overstate the rating to 5.0, so the mill's own number is used and the
+   count is shown alongside it.
+   ========================================================================== */
+
+var TESTIMONIALS = {
+    overall: "4.5",
+    outOf: "5",
+    count: 8,
+    reviews: [
+        {
+            name: "Musthafa Shaik", place: "Kovur, Andhra Pradesh",
+            stars: 5, date: "26 September 2025",
+            product: "Hosiery Fabric", text: null
+        },
+        {
+            name: "Bindiya Taneja", place: "New Delhi, Delhi",
+            stars: 5, date: "13 July 2025",
+            product: "Polyester Fabric", text: null
+        },
+        {
+            name: "Parul Jain", place: "Ludhiana, Punjab",
+            stars: 5, date: "8 September 2024",
+            product: "Terry Fabric",
+            text: "V. Good dealing, great efforts, full satisfied with clothes and reasonable price."
+        },
+        {
+            name: "Arsala", place: "Delhi, Delhi",
+            stars: 5, date: "5 May 2024",
+            product: "Jacket Fabric", text: null
+        },
+        {
+            name: "Rahul", place: "Kangra, Himachal Pradesh",
+            stars: 5, date: "3 September 2025",
+            product: "Tent Fabric", text: null
+        },
+        {
+            name: "Mujakkir", place: "New Delhi, Delhi",
+            stars: 5, date: "1 June 2025",
+            product: "Polyester Fabric", text: null
+        },
+        {
+            name: "Kamble Rajashekhar", place: "Bengaluru, Karnataka",
+            stars: 5, date: "2 January 2025",
+            product: "Terry Fabric", text: null
+        },
+        {
+            name: "Bajranglal Agarwal", place: "Guwahati, Assam",
+            stars: 5, date: "3 December 2024",
+            product: "Home Furnishing", text: null
+        }
+    ]
+};

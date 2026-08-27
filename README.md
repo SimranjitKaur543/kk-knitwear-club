@@ -101,6 +101,37 @@ Two real examples:
 - `Polyester Knitted Fabric (Poly-Cotton)` publishes `GSM: custom`. The page
   shows "custom"; the fabric does not appear under any GSM band.
 
+### Buyer reviews
+
+The eight reviews on the About page are copied verbatim from the
+manufacturer's own testimonial page — names, cities, ratings, dates and
+comment text. Only the two-digit years were written out in full.
+
+The overall figure (**4.5 out of 5**) is *quoted* from that page, not
+averaged from the eight entries. The source's own star breakdown counts a
+one-star review it never displays, so the eight visible reviews are all 5/5
+while the published average is 4.5. Averaging the visible eight would
+overstate the rating as 5.0, so the mill's own number is used and the review
+count shown beside it.
+
+### Short descriptions
+
+Only four products publish a description. For the rest, `buildSummary()` in
+`normalize.js` composes one sentence from values the mill has already
+published — GSM, construction, composition, width, finish, application:
+
+> A 180 GSM dot knit fabric in 100% polyester, 42 inches wide, with a
+> dri-fit finish. Used for sportswear, t-shirts and polo shirts.
+
+Nothing is invented. It is a restatement, in prose, of numbers that appear
+verbatim in the specification table further down the same page. Rules:
+
+- A product with real published copy uses that instead.
+- A product with fewer than two usable facts gets nothing rather than a
+  padded sentence. All 50 currently clear that bar.
+- `custom`, `on order` and the `37 mm` width are excluded, exactly as they
+  are from filtering.
+
 ### What was changed from the original site
 
 Only display copy, never a specification value:

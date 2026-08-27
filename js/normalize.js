@@ -117,24 +117,51 @@ function parseWidth(specs) {
    "Use IN TRACK SUITS SHORTS PAZZAMA"). We match their own words against a
    fixed list so buyers get one consistent filter.                          */
 
+/* `prose` is the same label written so it can sit inside a sentence -
+   "Used for t-shirts and polo shirts", not "Used for T-Shirts & Polo". */
 var APPLICATION_RULES = [
-    { label: "Sportswear",                 re: /sport/i },
-    { label: "T-Shirts & Polo",            re: /t[\s.-]?shirt|tshirt|polo/i },
-    { label: "Lowers & Track Suits",       re: /lower|track\s?suit|tracksuit|trackpant|pazzama|pyjama|short/i },
-    { label: "Shirts & Trousers",          re: /shirt|trouser|\bcoats?\b/i, ignoreTshirt: true },
-    { label: "Burkha",                     re: /burkha|burka|bhurka/i },
-    { label: "Lining",                     re: /lining|astar/i },
-    { label: "Blankets, Sweaters & Jackets", re: /blanket|sweater|jacket|hoddie|hoodie/i },
-    { label: "Home Furnishing",            re: /pillow|home\s?f[ua]rnishing|cushion|cartan/i },
-    { label: "Tent, Table & Chair Covers", re: /tent|chair\s?cover|table/i },
-    { label: "Curtains",                   re: /curtain/i },
-    { label: "Bags",                       re: /\bbag/i },
-    { label: "Uniforms",                   re: /uniform/i },
-    { label: "Nightwear",                  re: /night\s?suit|nightwear/i },
-    { label: "Ethnic Wear & Dresses",      re: /ethnic|dress\s?material|dresses/i },
-    { label: "Industrial",                 re: /industrial/i },
-    { label: "Garments",                   re: /garment|apparel|clothing/i }
+    { label: "Sportswear",                 prose: "sportswear",
+      re: /sport/i },
+    { label: "T-Shirts & Polo",            prose: "t-shirts and polo shirts",
+      re: /t[\s.-]?shirt|tshirt|polo/i },
+    { label: "Lowers & Track Suits",       prose: "lowers and track suits",
+      re: /lower|track\s?suit|tracksuit|trackpant|pazzama|pyjama|short/i },
+    { label: "Shirts & Trousers",          prose: "shirts and trousers",
+      re: /shirt|trouser|\bcoats?\b/i, ignoreTshirt: true },
+    { label: "Burkha",                     prose: "burkha",
+      re: /burkha|burka|bhurka/i },
+    { label: "Lining",                     prose: "lining",
+      re: /lining|astar/i },
+    { label: "Blankets, Sweaters & Jackets", prose: "blankets, sweaters and jackets",
+      re: /blanket|sweater|jacket|hoddie|hoodie/i },
+    { label: "Home Furnishing",            prose: "home furnishing",
+      re: /pillow|home\s?f[ua]rnishing|cushion|cartan/i },
+    { label: "Tent, Table & Chair Covers", prose: "tent, table and chair covers",
+      re: /tent|chair\s?cover|table/i },
+    { label: "Curtains",                   prose: "curtains",
+      re: /curtain/i },
+    { label: "Bags",                       prose: "bags",
+      re: /\bbag/i },
+    { label: "Uniforms",                   prose: "uniforms",
+      re: /uniform/i },
+    { label: "Nightwear",                  prose: "nightwear",
+      re: /night\s?suit|nightwear/i },
+    { label: "Ethnic Wear & Dresses",      prose: "ethnic wear and dresses",
+      re: /ethnic|dress\s?material|dresses/i },
+    { label: "Industrial",                 prose: "industrial use",
+      re: /industrial/i },
+    { label: "Garments",                   prose: "garments",
+      re: /garment|apparel|clothing/i }
 ];
+
+function applicationProse(label) {
+    for (var i = 0; i < APPLICATION_RULES.length; i++) {
+        if (APPLICATION_RULES[i].label === label) {
+            return APPLICATION_RULES[i].prose;
+        }
+    }
+    return label.toLowerCase();
+}
 
 function parseApplications(product) {
     var hay = valuesFor(product.specs, "usage").join(" ") + " " +
@@ -292,6 +319,91 @@ function priceLabel(product) {
     return "₹" + product.priceValue + " / " + product.priceUnit;
 }
 
+/* ---- Short description -------------------------------------------------
+   Only four of the fifty products publish a description of their own. For
+   the rest this composes one sentence out of values the mill has already
+   published - GSM, construction, composition, width, finish, application.
+
+   Nothing here is invented. It is a restatement, in prose, of numbers that
+   appear verbatim in the specification table lower down the same page. A
+   product whose page already carries real copy uses that instead, and any
+   product with fewer than two usable facts gets nothing rather than a
+   padded sentence.                                                        */
+
+/* Two items joined with "and" - unless one of them already contains an
+   "and", in which case a comma keeps the sentence readable.
+   "sportswear, t-shirts and polo shirts", not
+   "sportswear and t-shirts and polo shirts". */
+function joinTwo(items) {
+    if (items.length < 2) { return items[0] || ""; }
+    var glue = /\band\b/.test(items[0]) || /\band\b/.test(items[1]) ? ", " : " and ";
+    return items[0] + glue + items[1];
+}
+
+function buildSummary(p) {
+    var facts = 0;
+    var s = "A";
+
+    if (p.d.gsm && p.d.gsmLabel) {          // skips "custom" / "on order"
+        s += " " + p.d.gsmLabel.replace(/ GSM$/, "") + " GSM";
+        facts++;
+    }
+
+    /* "Mesh / Jali" reads badly mid-sentence - take the first term only. */
+    if (p.d.construction.length) {
+        s += " " + p.d.construction[0].split(" / ")[0].toLowerCase();
+        facts++;
+    } else if (p.d.pattern.length) {
+        /* No construction published: the weave/print is the next best
+           descriptor, and keeps "A fabric in polyester" from happening. */
+        s += " " + p.d.pattern[0].split(" / ")[0].toLowerCase();
+        facts++;
+    }
+
+    s += " fabric";
+
+    if (p.d.composition) {
+        s += " in " + (p.d.composition === "Poly-Cotton"
+            ? "poly-cotton" : p.d.composition.toLowerCase());
+        facts++;
+    }
+
+    if (p.d.width && p.d.widthLabel) {
+        s += ", " + p.d.widthLabel.replace(/ in$/, " inches") + " wide";
+        facts++;
+    }
+
+    if (p.d.finish.length) {
+        /* Machine wash is care instruction, not a finish. And "Soft Finish"
+           already ends in the word - do not write "a soft finish finish". */
+        var fin = p.d.finish.filter(function (f) { return f !== "Machine Wash"; });
+        if (fin.length) {
+            var name = fin[0].replace(/\s*finish$/i, "").toLowerCase();
+            s += ", with " + (/^[aeiou]/i.test(name) ? "an " : "a ") +
+                 name + " finish";
+            facts++;
+        }
+    }
+
+    s += ".";
+
+    /* Application is published data too, so it counts toward the threshold.
+       Without it, three products with only a composition would get nothing. */
+    var apps = p.d.applications
+        .filter(function (a) { return a !== "Garments"; })
+        .slice(0, 2)
+        .map(applicationProse);
+
+    if (!apps.length && p.d.applications.length) { apps = ["garments"]; }
+    if (apps.length) { facts++; }
+
+    if (facts < 2) { return null; }
+
+    if (apps.length) { s += " Used for " + joinTwo(apps) + "."; }
+
+    return s;
+}
+
 /* ==========================================================================
    Build the derived data once, at load time.
    ========================================================================== */
@@ -317,6 +429,10 @@ function enrichProducts(list) {
         p.d.gsmLabel   = gsmLabel(p);
         p.d.widthLabel = widthLabel(p);
         p.d.priceLabel = priceLabel(p);
+
+        /* Real published copy always wins over the composed sentence. */
+        p.d.summary = p.description || buildSummary(p);
+        p.d.summaryIsDerived = !p.description && !!p.d.summary;
         p.d.image      = IMAGE_PATH + p.images[0];
         p.d.images     = p.images.map(function (f) { return IMAGE_PATH + f; });
 
