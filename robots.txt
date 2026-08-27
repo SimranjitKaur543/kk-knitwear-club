@@ -1,0 +1,6 @@
+# Demo rebuild of the K.K. Knitwear Club website.
+# Deliberately excluded from search engines so that it cannot be confused
+# with, or outrank, the company's real site at kkknitwearclub.com.
+
+User-agent: *
+Disallow: /

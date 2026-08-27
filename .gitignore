@@ -1,0 +1,17 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Tooling (this project has no build step, but just in case)
+node_modules/
+npm-debug.log*
+*.log
+
+# Vercel CLI
+.vercel
