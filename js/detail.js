@@ -243,6 +243,15 @@
 
         qs("#pd-related").innerHTML = related(p);
 
+        /* Pinned enquiry bar, shown by CSS on small screens only */
+        qs("#pd-sticky").innerHTML =
+            '<div class="pd-sticky-price">' +
+                '<span class="amt">' + esc(p.d.priceLabel) + "</span>" +
+                (p.moq ? '<span class="moq">Minimum order ' + esc(p.moq) + "</span>" : "") +
+            "</div>" +
+            '<button class="btn btn--primary" type="button" data-act="enquire" ' +
+                'data-id="' + esc(p.id) + '">Enquire</button>';
+
         /* Gallery thumbnails */
         var main = qs("#pd-main-img");
         UI.qsa(".gallery-thumbs button").forEach(function (b) {

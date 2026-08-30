@@ -21,7 +21,13 @@
         {
             id: "category", label: "Category", open: true,
             get: function (p) { return p.categories; },
-            options: CATEGORIES.map(function (c) { return { value: c.key, label: c.name }; })
+            /* Short names here: the full ones wrap to two lines in a 240px
+               sidebar and strand the count on the first line. The full name
+               still appears as the page heading when the category is the
+               only filter selected. */
+            options: CATEGORIES.map(function (c) {
+                return { value: c.key, label: c.short || c.name };
+            })
         },
         {
             id: "app", label: "Application", open: true,

@@ -30,7 +30,10 @@
     </div>
 
     <div id="pd-related"></div>
+    <!-- The tray must precede the sticky bar: the CSS lifts the bar clear
+         of the tray with a general sibling selector. -->
     <div class="compare-tray" id="compare-tray"></div>
+    <div class="pd-sticky" id="pd-sticky"></div>
 </main>
 
 <footer id="site-footer"></footer>

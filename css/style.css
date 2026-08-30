@@ -1,4 +1,4 @@
-/* ==========================================================================
+﻿/* ==========================================================================
    K.K. Knitwear Club - stylesheet
    --------------------------------------------------------------------------
    Design principles for this file:
@@ -90,91 +90,95 @@ button { background: none; border: 0; }
        --------------------------------------------------------------------- */
 
     /* --- The specified palette, exactly as given ---------------------- */
-    --ivory:      #FAF7F2;   /* main background */
-    --peach:      #F7E8DF;   /* selected sections */
-    --sage-bg:    #E8F0E8;   /* secondary sections */
-    --powder:     #E7EEF5;   /* subtle highlights */
-    --beige:      #F2EDE5;   /* cards / areas */
-    --charcoal:   #292827;   /* text only */
-    --terracotta: #C96F5B;   /* primary buttons, active states, highlights */
-    --sage:       #718B73;   /* secondary accents */
-    --dusty:      #6F8FA8;   /* links, filters, informational */
-    --ochre:      #D6A84F;   /* very small highlights / badges */
+    --forest:     #34483D;   /* primary dark: headings, nav, buttons, links */
+    --ivory:      #F8F5EF;   /* main background */
+    --sage:       #DCE5DA;   /* secondary sections */
+    --beige:      #E9DED0;   /* subtle highlights */
+    --terracotta: #B86F52;   /* small accents */
+    --charcoal:   #292B29;   /* text */
 
-    /* --- Deepened shades of those same hues, for text and fills ------- */
-    --terracotta-ink: #A6503D;   /* 5.5:1  button fill, white text on it */
-    --terracotta-dk:  #8E4331;   /* 7.0:1  hover */
-    --dusty-ink:      #4A6B85;   /* 5.6:1  links */
-    --dusty-dk:       #3C5A72;   /* 7.3:1  link hover */
-    --sage-ink:       #4F684F;   /* 6.1:1  secondary accent text */
-    --ochre-ink:      #7A5A16;   /* 6.4:1  small label text */
+    /* --- Derived shades ------------------------------------------------
+       Forest green needed no adjustment: 7.4:1 as text on its worst
+       background, 9.8:1 with white on it. It carries headings, links,
+       navigation and the primary button exactly as given - the first hue
+       in this project that did not have to be deepened to stay legible.
+
+       Terracotta does need it: 2.91:1 as text and 3.86:1 with white on
+       it, both below AA. It stays as the identity for small fills, rules,
+       badges and borders, and a deepened version carries any text.       */
+    --forest-dk:      #253429;   /* 9.9:1  hover */
+    --forest-lt:      #E4EAE5;   /* tint: chips, panel headers */
+    --forest-ln:      #CBD8CE;
+    --terracotta-ink: #7F452F;   /* 5.7:1  terracotta text */
+    --terracotta-lt:  #F6E9E2;
+    --terracotta-ln:  #EBD3C7;
 
     /* --- Backgrounds --------------------------------------------------
-       Product cards stay WHITE rather than beige: beige on ivory is only
-       1.09, and a fabric photograph reads cleanest against white. Beige
-       does the "areas" job instead - toolbars, table heads, panels.      */
-    --page:          var(--ivory);    /* body */
-    --bg:            #ffffff;         /* product cards, panels */
-    --surface:       var(--beige);    /* toolbars, table heads, areas */
-    --surface-tint:  var(--peach);    /* section rhythm */
-    --surface-warm:  var(--sage-bg);  /* section rhythm */
-    --surface-2:     #EAE3D8;         /* hover / pressed fill */
-    --surface-3:     #DED5C6;
+       Ivory is the page. Sage and beige are only 1.028 apart, so ivory
+       must sit between them or the step is invisible. Product cards stay
+       WHITE - a fabric photograph reads cleanest against white, and white
+       on ivory is a clear 1.088.                                         */
+    --page:          var(--ivory);
+    --bg:            #ffffff;      /* product cards, panels */
+    --surface:       var(--beige); /* toolbars, table heads, areas */
+    --surface-tint:  var(--sage);  /* section rhythm */
+    --surface-warm:  var(--beige); /* section rhythm */
+    --surface-2:     #EFE9DF;      /* hover / pressed fill */
+    --surface-3:     #E2D8C8;
 
-    /* Powder blue takes the "subtle highlight" job: panel headers */
-    --navy-lt:       var(--powder);
-    --navy-ln:       #CFDDE9;
-    --navy:          var(--charcoal);  /* alias kept for existing rules */
-    --navy-dk:       #000000;
+    /* Panel headers take the forest tint */
+    --navy-lt:       var(--forest-lt);
+    --navy-ln:       var(--forest-ln);
+    --navy:          var(--forest);   /* alias kept for existing rules */
+    --navy-dk:       var(--forest-dk);
 
-    /* --- Hairlines, warmed to sit with the ivory and beige ------------ */
-    --line:       #E7DFD3;
-    --line-2:     #D8CDBC;
-    --line-3:     #C0B3A0;
+    /* --- Hairlines, warmed to sit with ivory and beige ---------------- */
+    --line:       #E6DFD4;
+    --line-2:     #D6CCBC;
+    --line-3:     #BFB3A1;
 
-    /* --- Text: charcoal only, per the palette -------------------------
-       Every value below clears AA on white, ivory, beige, peach, sage
-       and powder blue.                                                  */
-    --ink:        var(--charcoal);  /* headings, figures   12.3:1 worst */
-    --ink-2:      #3A3734;          /* body                10.4:1 worst */
-    --muted:      #5E5B57;          /* labels               5.7:1 worst */
-    --muted-2:    #6B6862;          /* micro-labels         4.6:1 worst */
+    /* --- Text ---------------------------------------------------------
+       Every value clears AA on white, ivory, sage, beige and both tints. */
+    --ink:        var(--charcoal);  /* headings, figures  10.8:1 worst */
+    --ink-2:      #3A403B;          /* body                8.0:1 worst */
+    --muted:      #525A55;          /* labels              5.4:1 worst */
+    --muted-2:    #5C6560;          /* micro-labels        4.5:1 worst */
 
-    /* --- Interactive: dusty blue (links, filters, informational) ------ */
-    --accent:     var(--dusty-ink);
-    --accent-dk:  var(--dusty-dk);
-    --accent-lt:  var(--powder);
-    --accent-ln:  #CFDDE9;
+    /* --- Interactive: forest green ------------------------------------ */
+    --accent:     var(--forest);
+    --accent-dk:  var(--forest-dk);
+    --accent-lt:  var(--forest-lt);
+    --accent-ln:  var(--forest-ln);
     --accent-ink: #ffffff;
 
-    /* --- Primary CTA and active state: terracotta -------------------- */
-    --cta:        var(--terracotta-ink);
-    --cta-dk:     var(--terracotta-dk);
-    --cta-lt:     #F9E7E1;
-    --cta-ln:     #EFD0C6;
+    /* --- Primary button: forest. Active nav state: terracotta --------- */
+    --cta:        var(--forest);
+    --cta-dk:     var(--forest-dk);
+    --cta-lt:     var(--terracotta-lt);
+    --cta-ln:     var(--terracotta-ln);
     --cta-ink:    #ffffff;
 
-    /* --- Secondary accent: sage (Best Suited For, "success") --------- */
-    --clay:       var(--sage);
-    --clay-dk:    var(--sage-ink);
-    --clay-lt:    var(--sage-bg);
-    --clay-ln:    #CFDECF;
-    --clay-mid:   #DBE7DB;   /* hover step */
+    /* --- Small accents: terracotta ------------------------------------ */
+    --clay:       var(--terracotta);
+    --clay-dk:    var(--terracotta-ink);
+    --clay-lt:    var(--terracotta-lt);
+    --clay-ln:    var(--terracotta-ln);
+    --clay-mid:   #EFDCD2;   /* hover step */
 
-    /* --- Ochre tints: badges and the comparison highlight ------------ */
-    --mus-lt:      #FBF3E2;
-    --mus-ln:      #EEDDB4;
-    --mus-mid:     #F6EBD2;   /* hover step */
-    --mustard:     var(--ochre);      /* alias kept for existing rules */
-    --mustard-ink: var(--ochre-ink);
+    /* --- Sage tints: highlights and "success" ------------------------- */
+    --mus-lt:      var(--sage);
+    --mus-ln:      #C8D6C6;
+    --mus-mid:     #D2DED0;
+    --mustard:     var(--terracotta);      /* alias kept for existing rules */
+    --mustard-ink: var(--terracotta-ink);
 
     /* --- Feedback, drawn from the palette rather than adding hues ---- */
-    --warn:       var(--ochre-ink);
-    --warn-bg:    var(--mus-lt);
-    --warn-line:  var(--mus-ln);
-    --ok:         var(--sage-ink);
-    --ok-bg:      var(--sage-bg);
-    --ok-line:    #CFDECF;
+    --warn:       var(--terracotta-ink);
+    --warn-bg:    var(--terracotta-lt);
+    --warn-line:  var(--terracotta-ln);
+    --ok:         var(--forest);
+    --ok-bg:      var(--forest-lt);
+    --ok-line:    var(--forest-ln);
     --danger:     #A13527;   /* form errors only */
 
     /* Spacing scale */
@@ -184,12 +188,13 @@ button { background: none; border: 0; }
     /* Radii */
     --r-xs: 4px; --r-sm: 6px; --r-md: 10px; --r-lg: 14px; --r-full: 999px;
 
-    /* Layered, faint shadows */
-    --sh-xs: 0 1px 2px rgba(26, 26, 24, .04);
-    --sh-sm: 0 1px 2px rgba(26, 26, 24, .04), 0 2px 6px rgba(26, 26, 24, .03);
-    --sh-md: 0 2px 4px rgba(26, 26, 24, .04), 0 8px 20px rgba(26, 26, 24, .06);
-    --sh-lg: 0 4px 8px rgba(26, 26, 24, .05), 0 16px 40px rgba(26, 26, 24, .10);
-    --sh-xl: 0 8px 16px rgba(26, 26, 24, .06), 0 32px 72px rgba(26, 26, 24, .18);
+    /* Layered, faint shadows, tinted with the forest green rather than a
+       neutral black - a grey shadow over ivory reads cold and muddy. */
+    --sh-xs: 0 1px 2px rgba(37, 52, 41, .05);
+    --sh-sm: 0 1px 2px rgba(37, 52, 41, .05), 0 2px 6px rgba(37, 52, 41, .04);
+    --sh-md: 0 2px 4px rgba(37, 52, 41, .05), 0 8px 20px rgba(37, 52, 41, .07);
+    --sh-lg: 0 4px 8px rgba(37, 52, 41, .06), 0 16px 40px rgba(37, 52, 41, .11);
+    --sh-xl: 0 8px 16px rgba(37, 52, 41, .07), 0 32px 72px rgba(37, 52, 41, .19);
 
     /* Fluid vertical rhythm. Section spacing scales with the viewport
        instead of stepping at breakpoints, so the page keeps the same
@@ -296,7 +301,7 @@ em { font-style: italic; }
 .section--surface { background: var(--surface); }       /* beige  */
 .section--tint    { background: var(--surface-tint); }  /* peach  */
 .section--warm    { background: var(--surface-warm); }  /* sage   */
-.section--cool    { background: var(--powder); }        /* powder blue */
+.section--cool    { background: var(--sage); }           /* alias */
 
 /* A hairline instead of a heavy tinted band, where separation is enough */
 .section--divided { border-top: 1px solid var(--line); }
@@ -342,7 +347,7 @@ em { font-style: italic; }
     z-index: 60;
     /* Light header, tinted to the ivory page rather than pure white so it
        does not read as a separate white band sitting on the background. */
-    background: rgba(250, 247, 242, .9);
+    background: rgba(248, 245, 239, .92);
     backdrop-filter: saturate(180%) blur(14px);
     -webkit-backdrop-filter: saturate(180%) blur(14px);
     border-bottom: 1px solid transparent;
@@ -432,12 +437,14 @@ em { font-style: italic; }
     bottom: 2px;
     height: 1.5px;
     border-radius: 2px;
-    background: var(--cta);
+    background: var(--terracotta);
     transform: scaleX(0);
     transition: transform var(--t);
 }
 .nav a:hover::after { transform: scaleX(.4); }
-.nav a[aria-current="page"] { color: var(--cta); font-weight: 600; }
+/* Terracotta marks the current page - the palette's "small accent" doing
+   real work, and a hue change rather than only a weight change. */
+.nav a[aria-current="page"] { color: var(--terracotta-ink); font-weight: 600; }
 .nav a[aria-current="page"]::after { transform: scaleX(1); }
 
 .header-tools {
@@ -712,6 +719,15 @@ a.chip:hover { background: var(--accent); color: var(--accent-ink); }
     box-shadow: var(--sh-md);
     transform: translateY(-4px);
 }
+/* The card is reached by keyboard through the links inside it, so the
+   focus state has to live on the card - otherwise focus disappears
+   visually as you tab through the grid. */
+.card:focus-within {
+    border-color: var(--forest);
+    box-shadow: 0 0 0 3px var(--forest-lt), var(--sh-md);
+}
+.card:focus-within .card-name a:focus-visible,
+.card:focus-within .btn:focus-visible { outline-offset: 1px; }
 
 /* The photograph is the largest, brightest thing on the card. No badge or
    gradient sits on top of it. */
@@ -737,6 +753,12 @@ a.chip:hover { background: var(--accent); color: var(--accent-ink); }
     flex: 1;
 }
 
+.card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s2);
+}
 .card-cat {
     font-size: .625rem;
     font-weight: 600;
@@ -747,6 +769,23 @@ a.chip:hover { background: var(--accent); color: var(--accent-ink); }
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    min-width: 0;
+}
+
+/* Terracotta, the palette's small accent, marking the four fabrics whose
+   listing states a sample can be supplied. */
+.card-badge {
+    flex-shrink: 0;
+    font-size: .5625rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--terracotta-ink);
+    background: var(--terracotta-lt);
+    border: 1px solid var(--terracotta-ln);
+    border-radius: var(--r-xs);
+    padding: 2px 6px;
+    line-height: 1.4;
 }
 
 .card-name {
@@ -988,7 +1027,7 @@ a.chip:hover { background: var(--accent); color: var(--accent-ink); }
 /* Dusty blue, which the palette assigns to filters */
 .fopt input {
     width: 15px; height: 15px;
-    accent-color: var(--dusty);
+    accent-color: var(--forest);
     cursor: pointer;
     flex-shrink: 0;
     margin: 0;
@@ -1003,14 +1042,20 @@ a.chip:hover { background: var(--accent); color: var(--accent-ink); }
 }
 .fopt.is-empty { opacity: .35; }
 
-/* Toolbar */
+/* Toolbar. Pinned under the header so the result count and sort control
+   stay reachable while scrolling fifty products, instead of scrolling
+   away after the first row. */
 .toolbar {
+    position: sticky;
+    top: var(--header-h);
+    z-index: 30;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: var(--s4);
     margin-bottom: var(--s5);
-    padding-bottom: var(--s4);
+    padding: var(--s3) 0 var(--s4);
+    background: var(--page);
     border-bottom: 1px solid var(--line);
     flex-wrap: wrap;
 }
@@ -1664,7 +1709,7 @@ a.chip:hover { background: var(--accent); color: var(--accent-ink); }
 }
 /* Ochre as a decorative rule - a fill, never text, which is the one place
    the given hue is safe to use at full strength. */
-.stat { padding-left: var(--s4); border-left: 2px solid var(--ochre); }
+.stat { padding-left: var(--s4); border-left: 2px solid var(--terracotta); }
 .stat .v {
     font-size: 1.625rem;
     font-weight: 650;
@@ -1851,6 +1896,124 @@ a.chip:hover { background: var(--accent); color: var(--accent-ink); }
 .review-who strong { display: block; color: var(--ink); font-size: .875rem; }
 .review-meta { display: block; font-size: .78125rem; color: var(--muted-2); margin-top: 1px; }
 
+/* On a phone the enquiry CTA sits above a long specification table and is
+   off-screen for most of the page, so it is repeated in a pinned bar.
+   Desktop keeps the inline button only - see the 900px block below. */
+.pd-sticky {
+    display: none;
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    z-index: 50;
+    background: var(--bg);
+    border-top: 1px solid var(--line-2);
+    box-shadow: 0 -4px 16px rgba(37, 52, 41, .08);
+    padding: var(--s3) var(--s4);
+    align-items: center;
+    gap: var(--s3);
+    transition: bottom var(--t);
+}
+.pd-sticky .pd-sticky-price { flex: 1; min-width: 0; }
+.pd-sticky .amt {
+    display: block;
+    font-size: 1rem;
+    font-weight: 650;
+    color: var(--ink);
+    letter-spacing: -.02em;
+    font-variant-numeric: tabular-nums;
+}
+.pd-sticky .moq {
+    display: block;
+    font-size: .6875rem;
+    color: var(--muted-2);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.pd-sticky .btn { flex-shrink: 0; }
+
+/* When the compare tray is showing, lift the bar clear of it. A general
+   sibling selector, so no JavaScript has to coordinate the two. */
+#compare-tray.is-open ~ .pd-sticky { bottom: 58px; }
+
+/* ---------- Capabilities page ------------------------------------------- */
+
+/* A chip that carries a count and links into the filtered catalogue.
+   Dusty blue on hover, since the palette assigns that to filters. */
+.cap-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s2);
+    padding: 7px 8px 7px 13px;
+    border: 1px solid var(--line-2);
+    border-radius: var(--r-full);
+    background: var(--bg);
+    color: var(--ink);
+    font-size: .8438rem;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: border-color var(--t-fast), background var(--t-fast), color var(--t-fast);
+}
+.cap-chip span {
+    min-width: 20px;
+    padding: 0 6px;
+    height: 19px;
+    border-radius: var(--r-full);
+    background: var(--surface-2);
+    color: var(--muted);
+    font-size: .6875rem;
+    font-weight: 600;
+    display: grid;
+    place-items: center;
+    font-variant-numeric: tabular-nums;
+    transition: background var(--t-fast), color var(--t-fast);
+}
+.cap-chip:hover {
+    border-color: var(--forest);
+    background: var(--accent-lt);
+    color: var(--accent-dk);
+}
+.cap-chip:hover span { background: var(--accent); color: #fff; }
+
+.cap-n { color: var(--muted-2); font-size: .8125rem; }
+
+/* Blocks for information the mill has not published yet */
+.cap-blocks {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(272px, 1fr));
+    gap: var(--s4);
+}
+.cap-block {
+    padding: var(--s5);
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    background: var(--bg);
+}
+.cap-block h3 { font-size: 1rem; margin-bottom: var(--s2); }
+.cap-block p { font-size: .875rem; color: var(--ink-2); max-width: none; }
+
+/* A dashed edge and an ochre flag, so a placeholder can never be mistaken
+   for a statement about the business. */
+.cap-block--pending {
+    border-style: dashed;
+    border-color: var(--line-2);
+    background: var(--surface);
+}
+.cap-flag {
+    display: inline-block;
+    font-size: .625rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--terracotta-ink);
+    background: var(--mus-lt);
+    border: 1px solid var(--mus-ln);
+    border-radius: var(--r-xs);
+    padding: 3px 8px;
+    margin-bottom: var(--s3);
+}
+.cap-block--pending h3 { color: var(--muted); }
+.cap-ask { color: var(--muted); font-style: italic; }
+
 /* ---------- 16. Footer -------------------------------------------------- */
 
 .site-footer {
@@ -1932,6 +2095,18 @@ noscript .note { margin: var(--s5) 0; }
 
 /* ---------- 18. Responsive ---------------------------------------------- */
 
+/* Between the mobile breakpoint and roughly 1080px, five nav items plus the
+   brand plus two labelled tool pills overflow the header. Dropping the pill
+   text to icon-and-count recovers about 120px, which keeps the horizontal
+   nav usable on a small laptop instead of falling back to a hamburger. */
+@media (max-width: 1080px) {
+    .header-tools .tool-pill span:not(.count) { display: none; }
+    .tool-pill { padding: 7px 10px; }
+    .nav a { padding: var(--s2) 10px; }
+    .nav a::after { left: 10px; right: 10px; }
+    .header-inner { gap: var(--s4); }
+}
+
 @media (max-width: 1140px) {
     .catalog { grid-template-columns: 240px minmax(0, 1fr); gap: var(--s5); }
     .hero-grid { gap: var(--s7); }
@@ -1957,7 +2132,7 @@ noscript .note { margin: var(--s5) 0; }
     .nav ul { flex-direction: column; align-items: stretch; gap: 2px; }
     .nav a { padding: var(--s3); font-size: .9375rem; }
     .nav a::after { display: none; }
-    .nav a[aria-current="page"] { background: var(--accent-lt); }
+    .nav a[aria-current="page"] { background: var(--terracotta-lt); }
 
     .nav-toggle { display: grid; order: 3; }
     .header-inner { gap: var(--s3); }
@@ -2009,6 +2184,10 @@ noscript .note { margin: var(--s5) 0; }
         background: var(--bg);
     }
     .filters-foot .btn { flex: 1; }
+
+    /* Pinned enquiry bar, phones and small tablets only */
+    .pd-sticky { display: flex; }
+    body[data-page="product"] { padding-bottom: 72px; }
 
     .sl-item { grid-template-columns: 88px minmax(0, 1fr); gap: var(--s4); }
     .sl-item img { width: 88px; }

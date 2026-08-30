@@ -58,10 +58,11 @@ var UI = (function () {
     /* ---------- header --------------------------------------------------- */
 
     var NAV = [
-        { key: "home",     label: "Home",     href: "index.html" },
-        { key: "products", label: "Products", href: "products.html" },
-        { key: "about",    label: "About Us", href: "about.html" },
-        { key: "contact",  label: "Contact",  href: "contact.html" }
+        { key: "home",         label: "Home",         href: "index.html" },
+        { key: "products",     label: "Products",     href: "products.html" },
+        { key: "capabilities", label: "Capabilities", href: "capabilities.html" },
+        { key: "about",        label: "About Us",     href: "about.html" },
+        { key: "contact",      label: "Contact",      href: "contact.html" }
     ];
 
     function headerHtml(active) {
@@ -122,6 +123,7 @@ var UI = (function () {
                     "<h4>Company</h4>" +
                     "<ul>" +
                         '<li><a href="about.html">About us</a></li>' +
+                        '<li><a href="capabilities.html">Capabilities</a></li>' +
                         '<li><a href="products.html">Our products</a></li>' +
                         '<li><a href="shortlist.html">My shortlist</a></li>' +
                         '<li><a href="compare.html">Compare fabrics</a></li>' +
@@ -185,7 +187,12 @@ var UI = (function () {
                     'loading="lazy" decoding="async">' +
             "</a>" +
             '<div class="card-body">' +
-                '<p class="card-cat">' + esc(catShort(p)) + "</p>" +
+                '<div class="card-top">' +
+                    '<p class="card-cat">' + esc(catShort(p)) + "</p>" +
+                    (/^yes$/i.test(p.d.sampleOrders || "")
+                        ? '<span class="card-badge" title="This listing states sample orders are fulfilled">Sample</span>'
+                        : "") +
+                "</div>" +
                 '<h3 class="card-name"><a href="' + href + '">' + esc(p.name) + "</a></h3>" +
                 '<div class="card-foot">' +
                     (specs ? '<ul class="card-specs">' + specs + "</ul>" : "") +
